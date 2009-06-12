@@ -5,3 +5,4 @@ urxvt*scrollBar: false
 xterm*font: -xos4-terminus-medium-r-normal-*-17-*-*-*-*-*-iso10646-1
 xterm*reverseVideo: true
 xterm*background: #666666
+xterm*foreground: #cccccc
