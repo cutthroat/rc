@@ -5,7 +5,6 @@ export PYTHONPATH=~/local/lib/python:$PYTHONPATH
 export EDITOR=vim
 export PAGER=less
 
-keychain ~/.ssh/id_rsa
-. ~/.ssh-agent > /dev/null
+eval $(keychain --quiet --eval --agents ssh id_rsa)
 
 . ~/.bashrc
