@@ -39,11 +39,9 @@ zstyle ':vcs_info:*' actionformats '%r %S -%a-'
 
 # prompt (we don't need no fancy themes)
 if [[ -n $(who mom likes | awk '{print $5}' | tr -d '()') ]] then
-    #PS1='[%n@%m %1(V.%v.%1~)]%(!.#.$) '
     PS1='%n@%m %1(V.%v.%1~)%# '
 else
-    #PS1='[%1(V.%v.%1~)]%(!.#.$) '
-    PS1='%1(V.%v.%1~)%# '
+    PS1='%1(V.%v.%1~)%# ' # or check out %(!.#.$)
 fi
 set_vcs_info() {
     vcs_info && psvar[1]=$vcs_info_msg_0_
