@@ -38,11 +38,6 @@
 (color-theme-zenburn)
 
 ;;; vi vi vi
-(setq viper-inhibit-startup-message 't
-      viper-expert-level '5
-      viper-ex-style-editing nil
-      viper-want-ctl-h-help t
-      viper-auto-indent t)
 (setq viper-mode t)
 (require 'viper)
 
