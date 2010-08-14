@@ -1,4 +1,0 @@
-Some personal config files.
-
-The ALSA set-up may be of use. It's configed with input/output multiplexing
-and stereo-to-6 channel duplicating.
