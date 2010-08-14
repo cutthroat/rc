@@ -1,0 +1,6 @@
+# <perl hacks> ftw!
+alias reshell="$EDITOR $HOME/.zshrc; source $HOME/.zshrc"
+alias realias="$EDITOR $HOME/.aliases; source $HOME/.aliases"
+alias reperl="perl -wde0"
+alias grep="grep --color=auto"
+alias ls="ls -F"

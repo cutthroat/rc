@@ -1,0 +1,13 @@
+! remove Caps Lock
+remove lock = Caps_Lock
+add control = Caps_Lock
+
+remove mod1 = Meta_L
+
+! set '" to meta and meta to '"
+! note: press win with middle finger by moving the hand
+keysym Meta_R = apostrophe quotedbl
+keysym apostrophe = Meta_R
+
+!remove mod0 = Alt_R
+!keysym Alt_R = Meta_L
