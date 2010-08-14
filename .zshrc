@@ -55,7 +55,7 @@ set_title() { # ^nb1
             ;;
     esac
 }
-set_eterm_dir() {
+set_eterm_dir() { # this is for emacs' ansi-term
     echo -e "\033AnSiTu $LOGNAME\n\033AnSiTc $PWD\n\033AnSiTh $HOST"
 }
 precmd_functions=(set_vcs_info set_title)
@@ -67,7 +67,7 @@ if [[ $TERM == "eterm-color" ]] then
 fi
 
 # completion
-zstyle :compinstall filename '/home/dimitar/.zshrc'
+zstyle :compinstall filename $HOME/.zshrc
 
 autoload -Uz compinit
 compinit
