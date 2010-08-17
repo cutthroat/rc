@@ -1,0 +1,12 @@
+urxvt*fading: 2
+urxvt*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-iso10646-1
+urxvt*scrollBar: false
+urxvt*background: #333333
+urxvt*foreground: #e5e5e5
+
+xterm*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-iso10646-1
+xterm*background: #333333
+xterm*foreground: #cccccc
+
+gvim*background: #333333
+gvim*foreground: #cccccc
