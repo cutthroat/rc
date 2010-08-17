@@ -1,0 +1,48 @@
+#!/usr/bin/python
+
+import sys
+from os import getenv, listdir
+from os.path import join, isdir, basename
+from fnmatch import fnmatch
+from shutil import copy2
+
+filters = [ basename(sys.argv[0]), '.ssh', '.git', '.gitignore' ] + open('.gitignore').read().split()
+
+def keep(x):
+    global filters
+    return not any(fnmatch(x, f) for f in filters)
+
+def filter_(dirlist):
+    dirs, rest = [], []
+    for x in sorted(filter(keep, dirlist)):
+        if isdir(x):
+            dirs.append(x)
+        else:
+            rest.append(x)
+    return dirs, rest
+
+def walk(start):
+    dirs, rest = filter_(listdir(start))
+    while True:
+        for y in rest:
+            yield y
+        if not dirs:
+            break
+        x = dirs.pop()
+        new_dirs, rest = filter_(join(x, y) for y in listdir(x))
+        dirs += new_dirs
+
+def copy_here():
+    home = getenv('HOME')
+    n = 0
+    for x in walk('.'):
+        y = join(home, x)
+        if open(x).read() == open(y).read():
+            continue
+        print(x)
+        copy2(y, x)
+        n += 1
+    print n, 'files copied'
+
+if __name__ == '__main__':
+    copy_here()
