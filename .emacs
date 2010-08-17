@@ -34,7 +34,7 @@
 (show-paren-mode t)
 
 
-(require 'egg) ; git support
+(require 'magit) ; git support
 
 
 (require 'color-theme)
