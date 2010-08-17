@@ -38,11 +38,11 @@ def copy_here():
     for x in walk('.'):
         y = join(home, x)
         if not exists(y):
-            print('skip', x)
+            print 'skip', x
             continue
         if open(x).read() == open(y).read():
             continue
-        print(x)
+        print x
         copy2(y, x)
         n += 1
     print n, 'files copied'
