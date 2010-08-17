@@ -1,76 +1,82 @@
-;; begin
 (add-to-list 'load-path "~/.emacs.d")
 
-;; splash screen
+
+(put 'erase-buffer 'disabled nil)
+
+
 (setq inhibit-splash-screen t)
+(setq-default indent-tabs-mode 0)
+(fset 'yes-or-no-p 'y-or-n-p)
 
-;; no tabs please
-(setq-default indent-tabs-mode nil)
 
-;; backup to .~
 (setq backup-directory-alist '(("." . ".~" ))) ; instead of (setq backup-inhibited t)
 
-;; nicer buffer list
-(global-set-key (kbd "C-x C-b") 'bs-show)
 
-;; dired
+(global-set-key (kbd "C-x C-b") 'bs-show) ; or ibuffer
+(iswitchb-mode t)
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+
 (require 'dired-x)
-(setq-default dired-omit-files-p t)
-(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(setq dired-listing-switches (concat dired-listing-switches " --group-directories-first -X"))
 (put 'dired-find-alternate-file 'disabled nil)
+(setq dired-recursive-copies t
+      dired-recursive-deletes t
+      dired-dwim-target t)
+(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+(setq-default dired-omit-files-p t)
+(setq dired-listing-switches (concat dired-listing-switches " --group-directories-first -X"))
 
-;; minor modes
-(delete-selection-mode 1)
 
-(global-font-lock-mode 1)
-
+(delete-selection-mode t)
+(global-font-lock-mode t)
 (setq show-paren-delay 0
       show-paren-style 'parenthesis)
-(show-paren-mode 1)
+(show-paren-mode t)
 
-;; color themes
+
+(require 'egg) ; git support
+
+
 (require 'color-theme)
 (color-theme-initialize)
-
-;; zenburn
 (require 'zenburn)
 (color-theme-zenburn)
 
-;;; vi vi vi
+
 (setq viper-mode t)
 (require 'viper)
 
-;;; lang support
 
-;; lua
 (autoload 'lua-mode "lua-mode" "lua mode." t)
 (add-to-list 'auto-mode-alist '("\.lua$" . lua-mode))
 
-;; perl
-(defalias 'perl-mode 'cperl-mode)
-(setq cperl-hairy t)
 
-(setq cperl-close-paren-offset -4
+(defalias 'perl-mode 'cperl-mode)
+(setq cperl-hairy t
+      cperl-close-paren-offset -4
       cperl-continued-statement-offset 4
       cperl-indent-level 4
       cperl-indent-parens-as-block t
       cperl-tabs-always-indent t)
 
-;; python
-(autoload 'python-mode "python-mode" "Python mode." t)
-(add-to-list 'auto-mode-alist '("/*.\.py$" . python-mode))
 
-;; php
 (autoload 'php-mode "php-mode" "Php mode." t)
 (add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
 
 
-;; gui
-(menu-bar-mode nil)
-(tool-bar-mode nil)
+(defun comint-erase-buffer () "Erase buffer of comint based modes."
+  (interactive) (erase-buffer) (comint-send-input))
+(add-hook 'comint-mode-hook
+          '(lambda () (define-key comint-mode-map (kbd "C-l") 'comint-erase-buffer))) 
 
+
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
 (set-default-font "Terminus 12")
+
+
+(server-mode 1)
 
 ;; old stuff
 

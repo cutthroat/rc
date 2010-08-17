@@ -3,7 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory extendedglob nomatch notify promptsubst
-unsetopt autocd beep
+setopt noautocd nobeep
 bindkey -v
 
 # text
@@ -38,7 +38,7 @@ zstyle ':vcs_info:*' formats       '%r %S'
 zstyle ':vcs_info:*' actionformats '%r %S -%a-'
 
 # prompt (we don't need no fancy themes)
-if [[ -n $(who mom likes | awk '{print $5}' | tr -d '()') ]] then
+if [[ -n $(who mom likes | awk '{print $5}' | tr -d '()') ]]; then
     PS1='%n@%m %1(V.%v.%1~)%# '
 else
     PS1='%1(V.%v.%1~)%# ' # or check out %(!.#.$)
@@ -59,7 +59,7 @@ set_eterm_dir() { # this is for emacs' ansi-term
 precmd_functions=(set_vcs_info set_title)
 set_vcs_info
 set_title
-if [[ $TERM == "eterm-color" ]] then
+if [[ $TERM == "eterm-color" ]]; then
     precmd_functions+=(set_eterm_dir)
     set_eterm_dir
 fi
