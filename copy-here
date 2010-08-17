@@ -2,7 +2,7 @@
 
 import sys
 from os import getenv, listdir
-from os.path import join, isdir, basename
+from os.path import join, isdir, basename, exists
 from fnmatch import fnmatch
 from shutil import copy2
 
@@ -10,7 +10,7 @@ filters = [ basename(sys.argv[0]), '.ssh', '.git', '.gitignore' ] + open('.gitig
 
 def keep(x):
     global filters
-    return not any(fnmatch(x, f) for f in filters)
+    return not any(fnmatch(basename(x), f) or fnmatch(join('/', x), f) for f in filters)
 
 def filter_(dirlist):
     dirs, rest = [], []
@@ -21,8 +21,8 @@ def filter_(dirlist):
             rest.append(x)
     return dirs, rest
 
-def walk(start):
-    dirs, rest = filter_(listdir(start))
+def walk(top):
+    dirs, rest = filter_(listdir(top))
     while True:
         for y in rest:
             yield y
@@ -37,6 +37,9 @@ def copy_here():
     n = 0
     for x in walk('.'):
         y = join(home, x)
+        if not exists(y):
+            print('skip', x)
+            continue
         if open(x).read() == open(y).read():
             continue
         print(x)
