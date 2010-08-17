@@ -6,7 +6,7 @@
 
 (setq inhibit-splash-screen t)
 (setq-default indent-tabs-mode 0)
-(fset 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 
 (setq backup-directory-alist '(("." . ".~" ))) ; instead of (setq backup-inhibited t)
