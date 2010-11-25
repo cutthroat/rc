@@ -4,8 +4,8 @@ add control = Caps_Lock
 
 ! set '" to meta and meta to '"
 ! note: press win with middle finger by moving the hand
-keysym apostrophe = Meta_R
-keysym Meta_R = apostrophe quotedbl
+!keysym apostrophe = Meta_R
+!keysym Meta_R = apostrophe quotedbl
 
 !remove mod0 = Alt_R
 !keysym Alt_R = Meta_L

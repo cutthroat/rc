@@ -15,7 +15,7 @@ function sbar
 
 function starcraft
 {
-    xrandr --output LVDS --off
+    #xrandr --output LVDS --off
     exec wine $HOME/wine/drive_c/StarCraft/StarCraft.exe
 }
 
@@ -25,14 +25,23 @@ setxkbmap -option grp:shifts_toggle
 setxkbmap -option altwin:meta_win
 xmodmap $HOME/.Xmodmap
 
-xrandr --output VGA-0 --auto --left-of LVDS
-xsetroot -cursor_name left_ptr
-sbar &
-unclutter &
-(nitrogen --restore && xrandr --output LVDS --off) &
-xmonad
-kill %2
-kill %1
 
+start_xmonad() {
+    xsetroot -cursor_name left_ptr
+    sbar &
+    unclutter &
+    (nitrogen --restore && xrandr --output LVDS --off) &
+    xmonad
+    kill %2
+    kill %1
+}
+
+xrandr --output VGA-0 --auto --left-of LVDS
+start_xmonad
+
+#xrandr --output S-video --off
+#xrandr --output LVDS --auto
+#xrandr --output S-video --auto --right-of LVDS
+#xrandr --output S-video --set "tv standard" pal
 #exec awesome
 #exec i3

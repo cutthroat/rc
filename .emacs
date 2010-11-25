@@ -12,26 +12,46 @@
 (setq backup-directory-alist '(("." . ".~" ))) ; instead of (setq backup-inhibited t)
 
 
-(global-set-key (kbd "C-x C-b") 'bs-show) ; or ibuffer
-(iswitchb-mode t)
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-
-(require 'dired-x)
-(put 'dired-find-alternate-file 'disabled nil)
-(setq dired-recursive-copies t
-      dired-recursive-deletes t
-      dired-dwim-target t)
-(setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-(setq-default dired-omit-files-p t)
-(setq dired-listing-switches (concat dired-listing-switches " --group-directories-first -X"))
-
-
 (delete-selection-mode t)
 (global-font-lock-mode t)
 (setq show-paren-delay 0
       show-paren-style 'parenthesis)
 (show-paren-mode t)
+
+
+(global-set-key (kbd "C-x C-b") 'bs-show) ; or ibuffer
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-m") 'indent-new-comment-line) ; 'reindent-then-newline-and-indent)
+
+
+(require 'ido) ; insted of iswitchb-mode
+(ido-mode t)
+(setq ido-enable-flex-matching t)
+
+
+(add-hook 'dired-load-hook
+          (lambda ()
+	    (load "dired-x")
+	    (setq dired-recursive-copies t)
+	    (setq dired-recursive-deletes t)
+	    (setq dired-dwim-target t)
+	    (setq dired-x-hands-off-my-keys nil)
+	    (setq dired-listing-switches (concat dired-listing-switches " --group-directories-first")) ; note --g-d-f does't work for ftp
+	    (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.[^.].*$")
+	    (put 'dired-find-alternate-file 'disabled nil)
+	    ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    (dired-omit-mode t)
+	    ))
+
+
+;(add-to-list 'load-path "~/.emacs.d/auto-complete/")
+;(require 'auto-complete-config)
+;(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+;(ac-config-default)
+;(setq ac-auto-start nil)
+;(ac-set-trigger-key "\M-TAB")
 
 
 (require 'magit) ; git support
@@ -47,28 +67,43 @@
 (require 'viper)
 
 
-(autoload 'lua-mode "lua-mode" "lua mode." t)
+(autoload 'lua-mode "lua-mode" "lua mode" t)
 (add-to-list 'auto-mode-alist '("\.lua$" . lua-mode))
 
 
 (defalias 'perl-mode 'cperl-mode)
 (setq cperl-hairy t
-      cperl-close-paren-offset -4
-      cperl-continued-statement-offset 4
-      cperl-indent-level 4
+      cperl-tabs-always-indent t
       cperl-indent-parens-as-block t
-      cperl-tabs-always-indent t)
+      cperl-indent-level 4
+      cperl-close-paren-offset -4
+      cperl-continued-statement-offset 4)
+(add-hook 'cperl-mode-hook (lambda () (auto-fill-mode t)))
 
 
-(autoload 'php-mode "php-mode" "Php mode." t)
+(autoload 'php-mode "php-mode" "Php mode" t)
 (add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
+(add-to-list 'load-path "~/.emacs.d/geben")
+(autoload 'geben "geben" "PHP Debugger on Emacs" t)
 
 
-(defun comint-erase-buffer () "Erase buffer of comint based modes."
+;(load "~/.emacs.d/nxhtml/autostart.el")
+;(setq mumamo-chunk-coloring 2)
+
+
+(defun comint-erase-buffer () "Erase buffer of comint based modes"
   (interactive) (erase-buffer) (comint-send-input))
 (add-hook 'comint-mode-hook
           '(lambda () (define-key comint-mode-map (kbd "C-l") 'comint-erase-buffer))) 
 
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max) nil))
+
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)

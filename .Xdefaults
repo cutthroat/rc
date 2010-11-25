@@ -3,6 +3,8 @@ urxvt*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-iso10646-1
 urxvt*scrollBar: false
 urxvt*background: #333333
 urxvt*foreground: #e5e5e5
+urxvt*background: #d6d6d6
+urxvt*foreground: #000000
 
 xterm*font: -xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-iso10646-1
 xterm*background: #333333
