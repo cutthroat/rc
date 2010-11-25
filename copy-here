@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-import sys
+from sys import argv
 from os import getenv, listdir
 from os.path import join, isdir, basename, exists
 from fnmatch import fnmatch
 from shutil import copy2
 
-filters = [ basename(sys.argv[0]), '.ssh', '.git', '.gitignore' ] + open('.gitignore').read().split()
+filters = [ basename(argv[0]), '.ssh', '.git', '.gitignore' ] + open('.gitignore').read().split()
 
 def keep(x):
     global filters
@@ -32,20 +32,21 @@ def walk(top):
         new_dirs, rest = filter_(join(x, y) for y in listdir(x))
         dirs += new_dirs
 
-def copy_here():
+def copy_here(dry_run=False):
     home = getenv('HOME')
     n = 0
     for x in walk('.'):
         y = join(home, x)
         if not exists(y):
-            print 'skip', x
+            print('skip', x)
             continue
         if open(x).read() == open(y).read():
             continue
-        print x
-        copy2(y, x)
+        print(x)
+        if not dry_run:
+            copy2(y, x)
         n += 1
-    print n, 'files copied'
+    print(n, 'files copied' if not dry_run else 'files to be copied')
 
 if __name__ == '__main__':
-    copy_here()
+    copy_here(len(argv) >= 2 and argv[1] == 'dry-run')
