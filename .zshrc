@@ -15,7 +15,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1024
 SAVEHIST=1024
 
-setup=(python perl smlnj pear contrib prompt q2w)
+setup=(perl smlnj contrib prompt)
 
 for name in $setup; do source $HOME/.zsh.d/$name.zsh; done
 unset setup name
