@@ -22,14 +22,15 @@ function starcraft
 
 setxkbmap -layout us,bg -variant ,phonetic
 setxkbmap -option grp:shifts_toggle
-setxkbmap -option altwin:meta_win
-xmodmap $HOME/.Xmodmap
+setxkbmap -option ctrl:swapcaps
+#setxkbmap -option altwin:meta_win
+#xmodmap $HOME/.Xmodmap
 
 
 start_xmonad() {
     xsetroot -cursor_name left_ptr
     sbar &
-    unclutter &
+    unclutter -grab &
     (nitrogen --restore && xrandr --output LVDS --off) &
     xmonad
     kill %2
