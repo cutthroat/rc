@@ -20,7 +20,7 @@ myManageHooks = maybeToDefinite (isFullscreen -?> doFullFloat)
 myConfig = defaultConfig
     { layoutHook = myLayouts
 
-    , terminal = "urxvt"
+    , terminal = "xterm"
 
     , borderWidth = 2
     , normalBorderColor = "#333333"
